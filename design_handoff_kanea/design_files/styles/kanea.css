@@ -1,0 +1,116 @@
+/* ============================================================
+   KANEA — Power as a service
+   Shared design system for Customer · Field · Ops surfaces
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  /* — warm neutral foundation — */
+  --bg:        oklch(0.984 0.006 80);   /* warm paper            */
+  --bg-2:      oklch(0.965 0.008 78);   /* sunk panel            */
+  --surface:   oklch(1 0 0);            /* cards                 */
+  --ink:       oklch(0.235 0.012 60);   /* primary text / btn    */
+  --ink-2:     oklch(0.44 0.012 58);    /* secondary text        */
+  --ink-3:     oklch(0.60 0.010 58);    /* muted / captions      */
+  --line:      oklch(0.905 0.008 72);   /* hairline border       */
+  --line-2:    oklch(0.85 0.010 72);    /* stronger border       */
+
+  /* — brand: sun. Used for identity + hero accents, NEVER status — */
+  --sun:       oklch(0.745 0.155 58);   /* sun-gold orange       */
+  --sun-deep:  oklch(0.62 0.145 48);    /* gradient end          */
+  --sun-soft:  oklch(0.95 0.035 70);    /* tint bg               */
+  --sun-ink:   oklch(0.40 0.10 50);     /* text on sun-soft      */
+
+  /* — status system (mandated): on / low / off — */
+  --on:        oklch(0.58 0.115 152);   /* green = on/healthy    */
+  --on-bg:     oklch(0.945 0.045 152);
+  --on-ink:    oklch(0.40 0.09 152);
+  --low:       oklch(0.74 0.135 78);    /* amber = low/attention */
+  --low-bg:    oklch(0.955 0.055 84);
+  --low-ink:   oklch(0.48 0.10 70);
+  --off:       oklch(0.555 0.195 27);   /* red = off/fault       */
+  --off-bg:    oklch(0.955 0.038 27);
+  --off-ink:   oklch(0.46 0.16 27);
+
+  /* — info (neutral cool, non-status accent for charts/links) — */
+  --info:      oklch(0.55 0.10 245);
+  --info-bg:   oklch(0.95 0.03 245);
+
+  /* — type — */
+  --sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --display: 'Space Grotesk', var(--sans);
+  --mono: 'Space Grotesk', ui-monospace, monospace;
+
+  /* — radii / shadow / spacing — */
+  --r-sm: 8px;
+  --r:    14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --shadow-sm: 0 1px 2px rgba(40,30,15,0.06), 0 1px 1px rgba(40,30,15,0.04);
+  --shadow:    0 2px 8px rgba(40,30,15,0.07), 0 6px 22px rgba(40,30,15,0.06);
+  --shadow-lg: 0 12px 40px rgba(40,30,15,0.12), 0 4px 12px rgba(40,30,15,0.07);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 { font-family: var(--display); margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+
+/* ---- numerals: tabular for money/balance ---- */
+.num { font-family: var(--display); font-feature-settings: 'tnum' 1; letter-spacing: -0.02em; }
+
+/* ---- status chip ---- */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px 4px 8px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; line-height: 1;
+  white-space: nowrap;
+}
+.chip .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.chip.on  { background: var(--on-bg);  color: var(--on-ink);  }
+.chip.on  .dot { background: var(--on); }
+.chip.low { background: var(--low-bg); color: var(--low-ink); }
+.chip.low .dot { background: var(--low); }
+.chip.off { background: var(--off-bg); color: var(--off-ink); }
+.chip.off .dot { background: var(--off); }
+.chip.neutral { background: var(--bg-2); color: var(--ink-2); }
+.chip.neutral .dot { background: var(--ink-3); }
+
+/* ---- buttons ---- */
+.btn {
+  font-family: var(--sans); font-weight: 600; font-size: 15px;
+  border: 1px solid transparent; border-radius: var(--r);
+  padding: 12px 18px; cursor: pointer; line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  white-space: nowrap;
+  transition: transform .08s ease, background .15s ease, box-shadow .15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--ink); color: var(--bg); }
+.btn-primary:hover { background: oklch(0.30 0.015 60); }
+.btn-sun { background: var(--sun); color: oklch(0.22 0.04 50); box-shadow: var(--shadow-sm); }
+.btn-sun:hover { background: oklch(0.78 0.155 60); }
+.btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line-2); }
+.btn-ghost:hover { background: var(--bg-2); }
+
+/* ---- card ---- */
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-sm);
+}
+
+a { color: inherit; }
+
+/* scrollbars inside frames */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }

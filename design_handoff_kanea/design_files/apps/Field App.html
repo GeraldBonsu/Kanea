@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanea — Field App</title>
+<link rel="stylesheet" href="../styles/kanea.css">
+<style>
+  body { background: var(--bg-2); }
+  .topbar { border-bottom: 1px solid var(--line); background: color-mix(in oklch, var(--bg) 85%, transparent); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 30; }
+  .topbar-in { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; padding: 0 24px; }
+  .back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink-2); font-weight: 600; font-size: 14px; padding: 8px 12px; border-radius: 10px; }
+  .back:hover { background: var(--bg-2); color: var(--ink); }
+  .topbar .title { font-family: var(--display); font-weight: 600; font-size: 16px; }
+  .topbar .title b { color: var(--sun-deep); }
+
+  .stage { display: flex; gap: 44px; align-items: flex-start; justify-content: center; padding: 40px 24px 60px; flex-wrap: wrap; }
+  .controls { width: 300px; position: sticky; top: 90px; }
+  .controls .grp { margin-bottom: 22px; }
+  .controls h3 { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; font-weight: 600; }
+  .seg { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 5px; }
+  .seg button { flex: 1; padding: 9px 4px; border: none; background: none; cursor: pointer; border-radius: 8px; font-family: var(--sans); font-weight: 600; font-size: 13.5px; color: var(--ink-3); display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .seg button.on { background: var(--ink); color: var(--bg); }
+  .seg .sdot { width: 9px; height: 9px; border-radius: 50%; }
+  .controls .desc { font-size: 12.5px; color: var(--ink-3); margin-top: 9px; line-height: 1.5; }
+  .controls .lead { font-size: 13.5px; color: var(--ink-2); line-height: 1.55; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+
+  .phone-label { text-align: center; font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: 0.08em; margin-top: 14px; }
+
+  .fld-mini { display: inline-flex; align-items: center; gap: 6px; font-family: var(--sans); font-size: 12.5px; font-weight: 700; padding: 8px 12px; border-radius: 9px; border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); cursor: pointer; white-space: nowrap; }
+  .fld-mini:hover { background: var(--bg-2); }
+  .fld-tic { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex: none; }
+  .fld-tic.off { background: var(--off-bg); color: var(--off); }
+  .fld-tic.low { background: var(--low-bg); color: var(--low-ink); }
+  .fld-tic.neutral { background: var(--info-bg); color: var(--info); }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="back" href="../Kanea — Framework.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Framework</a>
+    <div class="title">Kane<b>a</b> · Field App</div>
+    <div style="width:110px"></div>
+  </div>
+</div>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="../frames/android-frame.jsx"></script>
+<script type="text/babel" src="field.jsx"></script>
+<script type="text/babel">
+const { useState } = React;
+function Page() {
+  const [role, setRole] = useState('technician');
+  const [online, setOnline] = useState(false);
+
+  return (
+    <div className="stage">
+      <div className="controls">
+        <div className="grp">
+          <h3>Role</h3>
+          <div className="seg">
+            <button className={role === 'agent' ? 'on' : ''} onClick={() => setRole('agent')}>Agent</button>
+            <button className={role === 'technician' ? 'on' : ''} onClick={() => setRole('technician')}>Technician</button>
+          </div>
+          <div className="desc">Agents onboard customers; technicians install &amp; resolve faults. Both share the offline outbox.</div>
+        </div>
+        <div className="grp">
+          <h3>Connectivity</h3>
+          <div className="seg">
+            <button className={online ? 'on' : ''} onClick={() => setOnline(true)}>Online</button>
+            <button className={!online ? 'on' : ''} onClick={() => setOnline(false)}>Offline</button>
+          </div>
+          <div className="desc">The field app is offline-first. Toggle offline, run the onboarding wizard, then go online to watch the outbox sync.</div>
+        </div>
+        <div className="grp">
+          <h3>Try this</h3>
+          <div className="lead">Tap <b>New customer</b> to run the full flow: KYC → site survey → scan device serials → commissioning checklist → activate. Each step saves to the device and queues for sync.</div>
+        </div>
+      </div>
+
+      <div>
+        <AndroidDevice width={380} height={788}>
+          <FieldApp role={role} online={online} />
+        </AndroidDevice>
+        <div className="phone-label">MID-RANGE ANDROID · OFFLINE-FIRST</div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Page />);
+</script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanea — Product Framework</title>
+<link rel="stylesheet" href="styles/kanea.css">
+<style>
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* top bar */
+  .topbar { border-bottom: 1px solid var(--line); background: color-mix(in oklch, var(--bg) 80%, transparent); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 20; }
+  .topbar-in { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .mark { width: 34px; height: 34px; }
+  .brand .name { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
+  .brand .name b { color: var(--sun-deep); }
+  .topbar .meta { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-2); }
+  .pill { border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 12px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); background: var(--surface); }
+
+  /* hero */
+  .hero { padding: 72px 0 40px; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sun-deep); font-weight: 600; }
+  .hero h1 { font-size: 52px; line-height: 1.04; margin: 18px 0 0; max-width: 16ch; letter-spacing: -0.025em; }
+  .hero h1 .hl { background: linear-gradient(180deg, transparent 62%, var(--sun-soft) 62%); padding: 0 2px; }
+  .hero p.lede { font-size: 19px; line-height: 1.5; color: var(--ink-2); max-width: 58ch; margin: 22px 0 0; }
+  .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+
+  /* loop diagram card */
+  .loop { background: var(--ink); color: oklch(0.92 0.01 80); border-radius: var(--r-xl); padding: 28px; box-shadow: var(--shadow-lg); }
+  .loop h3 { color: var(--bg); font-size: 15px; font-family: var(--sans); font-weight: 700; letter-spacing: 0.02em; }
+  .loop .principle { font-family: var(--mono); font-size: 12.5px; color: var(--sun); letter-spacing: 0.04em; margin-top: 2px; }
+  .loop-node { border: 1px solid oklch(0.40 0.01 60); border-radius: var(--r); padding: 13px 15px; margin-top: 12px; display: flex; align-items: center; gap: 12px; }
+  .loop-node .ic { width: 34px; height: 34px; border-radius: 9px; background: oklch(0.32 0.015 60); display: flex; align-items: center; justify-content: center; flex: none; }
+  .loop-node .t { font-size: 14px; font-weight: 600; color: var(--bg); }
+  .loop-node .s { font-size: 12px; color: oklch(0.72 0.01 70); margin-top: 1px; }
+  .loop-arrow { display: flex; justify-content: center; gap: 10px; padding: 7px 0 1px; }
+  .loop-arrow span { font-family: var(--mono); font-size: 11px; color: oklch(0.70 0.06 80); display: flex; align-items: center; gap: 6px; }
+  .loop-arrow .up { color: var(--sun); }
+
+  /* section */
+  section.blk { padding: 30px 0; }
+  .blk-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 22px; border-top: 1px solid var(--line); padding-top: 26px; }
+  .blk-head h2 { font-size: 14px; font-family: var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+  .blk-head .note { font-size: 13.5px; color: var(--ink-3); }
+
+  /* app cards */
+  .apps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .app-card { display: flex; flex-direction: column; padding: 24px; text-decoration: none; color: inherit; position: relative; overflow: hidden; transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease; }
+  .app-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--line-2); }
+  .app-card .tag { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+  .app-card .ttl { font-size: 23px; margin-top: 12px; font-family: var(--display); font-weight: 600; }
+  .app-card .who { font-size: 14px; color: var(--ink-2); margin-top: 6px; line-height: 1.45; min-height: 40px; }
+  .app-card .job { font-size: 14.5px; color: var(--ink); margin-top: 16px; line-height: 1.5; font-weight: 500; }
+  .app-card .screens { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .app-card .screens li { font-size: 12px; color: var(--ink-2); background: var(--bg-2); border-radius: 7px; padding: 4px 9px; }
+  .app-card .foot { margin-top: auto; padding-top: 22px; display: flex; align-items: center; justify-content: space-between; }
+  .app-card .platform { font-size: 12.5px; color: var(--ink-3); font-weight: 600; }
+  .app-card .go { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; font-size: 14px; color: var(--ink); }
+  .app-card .go svg { transition: transform .15s ease; }
+  .app-card:hover .go svg { transform: translateX(4px); }
+  .app-accent { height: 4px; border-radius: 999px; width: 46px; margin-bottom: 18px; }
+
+  /* system snapshot */
+  .sys-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; }
+  .panel { padding: 24px; }
+  .panel h3 { font-size: 13px; font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin-bottom: 16px; }
+  .status-row { display: flex; flex-direction: column; gap: 12px; }
+  .status-item { display: flex; align-items: center; gap: 14px; }
+  .status-item .lg-chip { width: 130px; }
+  .status-item .desc { font-size: 13.5px; color: var(--ink-2); }
+  .status-item .desc b { color: var(--ink); font-weight: 600; }
+
+  .type-spec .big { font-family: var(--display); font-size: 44px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .type-spec .lbl { font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em; margin-top: 6px; }
+  .type-spec .row { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .type-spec .row:last-child { border: none; }
+  .swatches { display: flex; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
+  .sw { display: flex; flex-direction: column; gap: 6px; }
+  .sw .box { width: 56px; height: 40px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.06); }
+  .sw .nm { font-size: 10.5px; font-family: var(--mono); color: var(--ink-3); }
+
+  /* decision callout */
+  .decision { display: flex; gap: 18px; align-items: flex-start; padding: 22px 24px; background: var(--low-bg); border: 1px solid color-mix(in oklch, var(--low) 35%, var(--low-bg)); border-radius: var(--r-lg); }
+  .decision .badge { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; background: var(--low); color: oklch(0.28 0.06 70); padding: 5px 9px; border-radius: 7px; font-weight: 700; flex: none; }
+  .decision .body { font-size: 14.5px; line-height: 1.55; color: var(--low-ink); }
+  .decision .body b { color: oklch(0.34 0.09 65); }
+
+  /* assumptions */
+  .notes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 36px; }
+  .note-item { display: flex; gap: 12px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+  .note-item .k { font-family: var(--mono); font-size: 11px; color: var(--sun-deep); font-weight: 700; flex: none; width: 78px; padding-top: 2px; letter-spacing: 0.04em; }
+  .note-item b { color: var(--ink); font-weight: 600; }
+
+  footer { padding: 40px 0 60px; color: var(--ink-3); font-size: 13px; border-top: 1px solid var(--line); margin-top: 24px; }
+
+  @media (max-width: 900px) {
+    .hero-grid, .sys-grid { grid-template-columns: 1fr; }
+    .apps { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 40px; }
+    .notes { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <circle cx="20" cy="20" r="9" fill="var(--sun)"/>
+        <g stroke="var(--sun)" stroke-width="2.6" stroke-linecap="round">
+          <line x1="20" y1="3.5" x2="20" y2="9"/><line x1="20" y1="31" x2="20" y2="36.5"/>
+          <line x1="3.5" y1="20" x2="9" y2="20"/><line x1="31" y1="20" x2="36.5" y2="20"/>
+          <line x1="8" y1="8" x2="11.8" y2="11.8"/><line x1="28.2" y1="28.2" x2="32" y2="32"/>
+          <line x1="32" y1="8" x2="28.2" y2="11.8"/><line x1="11.8" y1="28.2" x2="8" y2="32"/>
+        </g>
+      </svg>
+      <span class="name">Kane<b>a</b></span>
+    </div>
+    <div class="meta">
+      <span class="pill">Ghana · GHS ₵</span>
+      <span class="pill">MVP v0.1</span>
+      <span class="pill">Framework</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Power as a service</span>
+        <h1>Reliable electricity, sold as a <span class="hl">monthly service</span>.</h1>
+        <p class="lede">The customer never buys hardware. They pay — prepaid — for power; we own, monitor and maintain the solar-plus-battery system. These three apps make that promise <b>visible, payable and serviceable.</b></p>
+      </div>
+
+      <!-- closed loop -->
+      <div class="loop">
+        <h3>The closed loop</h3>
+        <div class="principle">payment → unlock · zero balance → disconnect</div>
+
+        <div class="loop-node">
+          <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sun)" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg></div>
+          <div><div class="t">Customer site</div><div class="s">solar · battery · smart meter</div></div>
+        </div>
+        <div class="loop-arrow">
+          <span>▼ telemetry</span>
+          <span class="up">▲ enable / disable</span>
+        </div>
+        <div class="loop-node">
+          <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sun)" stroke-width="2"><path d="M3 7h18v10H3z"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+          <div><div class="t">Cloud platform</div><div class="s">metering · billing · monitoring</div></div>
+        </div>
+        <div class="loop-arrow"><span>▼ data &amp; control</span></div>
+        <div class="loop-node">
+          <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sun)" stroke-width="2"><path d="M7 4h10v16H7z"/><path d="M11 18h2"/></svg></div>
+          <div><div class="t">Three surfaces</div><div class="s">Customer · Field · Ops</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPS -->
+  <section class="blk">
+    <div class="blk-head">
+      <h2>The three surfaces</h2>
+      <span class="note">Shared data model · shared status system · prepaid-metered billing</span>
+    </div>
+    <div class="apps">
+
+      <a class="app-card card" href="apps/Customer App.html">
+        <div class="app-accent" style="background: var(--sun)"></div>
+        <span class="tag">App 1 · Mobile</span>
+        <div class="ttl">Customer</div>
+        <div class="who">Households &amp; small businesses, smartphone with intermittent data.</div>
+        <div class="job">“Do I have power? How much is left? Top up fast.”</div>
+        <ul class="screens">
+          <li>Home / status</li><li>Top up</li><li>Usage</li><li>Savings</li><li>Report fault</li><li>USSD parity</li>
+        </ul>
+        <div class="foot">
+          <span class="platform">React Native · + USSD/SMS</span>
+          <span class="go">Open <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+
+      <a class="app-card card" href="apps/Field App.html">
+        <div class="app-accent" style="background: var(--on)"></div>
+        <span class="tag">App 2 · Mobile</span>
+        <div class="ttl">Field</div>
+        <div class="who">Sales agents &amp; technicians — rural, frequently offline, mid-range Android.</div>
+        <div class="job">“Onboard, install correctly, resolve faults fast.”</div>
+        <ul class="screens">
+          <li>KYC onboarding</li><li>Site survey</li><li>Install capture</li><li>Commissioning</li><li>Work orders</li><li>Offline sync</li>
+        </ul>
+        <div class="foot">
+          <span class="platform">React Native · offline-first</span>
+          <span class="go">Open <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+
+      <a class="app-card card" href="apps/Ops Dashboard.html">
+        <div class="app-accent" style="background: var(--info)"></div>
+        <span class="tag">App 3 · Web</span>
+        <div class="ttl">Ops &amp; Fleet</div>
+        <div class="who">Ops, customer success, finance. Where the durable moat lives.</div>
+        <div class="job">“See what's broken before customers do. Collect humanely.”</div>
+        <ul class="screens">
+          <li>Fleet map</li><li>Exceptions</li><li>Collections</li><li>Site 360</li><li>Tickets</li><li>Analytics</li>
+        </ul>
+        <div class="foot">
+          <span class="platform">React + TS · desktop-first</span>
+          <span class="go">Open <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- SYSTEM SNAPSHOT -->
+  <section class="blk">
+    <div class="blk-head">
+      <h2>Design system</h2>
+      <span class="note">Consistent across all three apps</span>
+    </div>
+    <div class="sys-grid">
+
+      <div class="panel card">
+        <h3>Status system — colour + icon + label, never colour alone</h3>
+        <div class="status-row">
+          <div class="status-item">
+            <span class="chip on lg-chip"><span class="dot"></span> On · Healthy</span>
+            <span class="desc"><b>Green.</b> Power flowing, balance fine, device healthy.</span>
+          </div>
+          <div class="status-item">
+            <span class="chip low lg-chip"><span class="dot"></span> Low · Attention</span>
+            <span class="desc"><b>Amber.</b> Low balance, low battery, warning before cutoff.</span>
+          </div>
+          <div class="status-item">
+            <span class="chip off lg-chip"><span class="dot"></span> Off · Fault</span>
+            <span class="desc"><b>Red.</b> Disconnected, meter offline, open fault.</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--ink-3);margin:18px 0 0;line-height:1.5;">The sun-gold brand colour is reserved for identity and hero moments — it is <b>never</b> used to convey status, so amber stays unambiguous.</p>
+      </div>
+
+      <div class="panel card type-spec">
+        <h3>Type &amp; palette</h3>
+        <div class="row">
+          <div class="big num">₵48.50</div>
+          <div class="lbl">SPACE GROTESK · tabular numerals — balances &amp; data</div>
+        </div>
+        <div class="row">
+          <div style="font-family:var(--sans);font-size:21px;font-weight:600;">Top up to keep the lights on</div>
+          <div class="lbl">HANKEN GROTESK · UI &amp; body — legible at mixed literacy</div>
+        </div>
+        <div class="row">
+          <div class="swatches">
+            <div class="sw"><div class="box" style="background:var(--sun)"></div><span class="nm">sun</span></div>
+            <div class="sw"><div class="box" style="background:var(--ink)"></div><span class="nm">ink</span></div>
+            <div class="sw"><div class="box" style="background:var(--on)"></div><span class="nm">on</span></div>
+            <div class="sw"><div class="box" style="background:var(--low)"></div><span class="nm">low</span></div>
+            <div class="sw"><div class="box" style="background:var(--off)"></div><span class="nm">off</span></div>
+            <div class="sw"><div class="box" style="background:var(--bg-2);border-color:var(--line-2)"></div><span class="nm">paper</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ASSUMPTIONS / DESIGN REASONING -->
+  <section class="blk">
+    <div class="blk-head">
+      <h2>Working assumptions</h2>
+      <span class="note">Flag anything you'd change — these shape the whole build</span>
+    </div>
+    <div class="notes">
+      <div class="note-item"><span class="k">MARKET</span><div><b>Ghana first.</b> GHS (₵), English + Twi, MTN MoMo &amp; Hubtel as the mobile-money rails. Currency &amp; language abstracted so other markets drop in.</div></div>
+      <div class="note-item"><span class="k">PRICING</span><div><b>Prepaid metered</b> (the spec's recommended MVP). Balance depletes with use; zero → disconnect after grace. This is the one open decision — see below.</div></div>
+      <div class="note-item"><span class="k">BRAND</span><div><b>“Kanea”</b> — Twi for <i>light / lamp</i> — as a placeholder name. Warm, trustworthy, low-literacy memorable. Swap freely.</div></div>
+      <div class="note-item"><span class="k">TONE</span><div><b>Trust &amp; clarity.</b> Big numerals, status by colour + icon + label, minimal copy, large tap targets, offline/synced state always visible.</div></div>
+      <div class="note-item"><span class="k">DEVICE</span><div><b>Mid-range Android</b> for both mobile apps — rendered in a phone frame. Ops is desktop-first in a browser window.</div></div>
+      <div class="note-item"><span class="k">SCOPE</span><div><b>Hero screens built out</b>, secondary screens stubbed. v1 out-of-scope items (appliance-level monitoring, referrals, ML) deliberately left out.</div></div>
+    </div>
+  </section>
+
+  <!-- OPEN DECISION -->
+  <section class="blk">
+    <div class="decision">
+      <span class="badge">OPEN</span>
+      <div class="body">
+        <b>Pricing model blocks the customer-app wallet.</b> I've built against <b>prepaid metered</b> — balance in units, depletes with consumption, auto-disconnect at zero with a grace period. If you'd rather a flat monthly tier or a hybrid base-fee-plus-usage model, the wallet and billing surfaces change (everything else holds). Confirm before we deepen the wallet logic.
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap" style="padding-left:0;padding-right:0;">
+    Kanea — Solar Subscription Utility · MVP framework · Customer, Field &amp; Ops surfaces. Placeholder brand &amp; illustrative data throughout.
+  </footer>
+
+</div>
+</body>
+</html>
