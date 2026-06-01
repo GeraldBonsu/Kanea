@@ -8,8 +8,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@kanea/design-system": "workspace:*",
-    "@kanea/mock-api": "workspace:*",
     "msw": "^2.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

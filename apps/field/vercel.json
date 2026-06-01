@@ -1,6 +1,5 @@
 {
-  "buildCommand": "cd ../.. && pnpm --filter @kanea/field build",
+  "buildCommand": "pnpm build",
   "outputDirectory": "dist",
-  "installCommand": "cd ../.. && pnpm install",
   "framework": "vite"
 }
