@@ -4,9 +4,9 @@ Power as a service for the Ghana market. Three apps, one monorepo.
 
 | App | What it is | Deployed URL |
 |---|---|---|
-| **Customer** | Mobile-web app for households — balance, top-up, usage, fault reporting | TBD (Vercel) |
-| **Field** | Offline-first app for agents & technicians — onboarding wizard, work orders | TBD (Vercel) |
-| **Ops** | Desktop dashboard — exceptions, collections, fleet map, site 360, analytics | TBD (Vercel) |
+| **Customer** | Mobile-web app for households — balance, top-up, usage, fault reporting | https://kanea-customer.vercel.app |
+| **Field** | Offline-first app for agents & technicians — onboarding wizard, work orders | https://kanea-field.vercel.app |
+| **Ops** | Desktop dashboard — exceptions, collections, fleet map, site 360, analytics | https://kanea-ops.vercel.app |
 
 ## Getting started
 
