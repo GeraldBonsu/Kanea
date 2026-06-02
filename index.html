@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kanea — Power as a Service · Investor Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    fontFamily: { display: ['Space Grotesk','system-ui','sans-serif'], body: ['Hanken Grotesk','system-ui','sans-serif'] }
+  }}
+}
+</script>
+<style>
+:root {
+  --bg:       oklch(0.984 0.006 80);
+  --bg-2:     oklch(0.965 0.008 78);
+  --surface:  oklch(1 0 0);
+  --ink:      oklch(0.235 0.012 60);
+  --ink-2:    oklch(0.44 0.012 58);
+  --ink-3:    oklch(0.60 0.010 58);
+  --line:     oklch(0.905 0.008 72);
+  --line-2:   oklch(0.85 0.010 72);
+  --sun:      oklch(0.745 0.155 58);
+  --sun-deep: oklch(0.62 0.145 48);
+  --sun-soft: oklch(0.95 0.035 70);
+  --sun-ink:  oklch(0.40 0.10 50);
+  --on:       oklch(0.58 0.115 152);
+  --on-bg:    oklch(0.945 0.045 152);
+  --on-ink:   oklch(0.40 0.09 152);
+  --low:      oklch(0.74 0.135 78);
+  --low-bg:   oklch(0.955 0.055 84);
+  --low-ink:  oklch(0.48 0.10 70);
+  --off:      oklch(0.555 0.195 27);
+  --off-bg:   oklch(0.955 0.038 27);
+  --off-ink:  oklch(0.46 0.16 27);
+  --sans:     'Hanken Grotesk', system-ui, sans-serif;
+  --display:  'Space Grotesk', var(--sans);
+  --mono:     'Space Grotesk', ui-monospace, monospace;
+  --shadow-sm: 0 1px 2px rgba(40,30,15,.06), 0 1px 1px rgba(40,30,15,.04);
+  --shadow:    0 2px 8px rgba(40,30,15,.07), 0 6px 22px rgba(40,30,15,.06);
+  --shadow-lg: 0 12px 40px rgba(40,30,15,.12), 0 4px 12px rgba(40,30,15,.07);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);margin:0;font-weight:700;letter-spacing:-0.01em}
+.num{font-family:var(--display);font-feature-settings:'tnum' 1;letter-spacing:-0.02em}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sun-deep)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-sm)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px 4px 10px;border-radius:999px;font-size:13px;font-weight:600;line-height:1;white-space:nowrap}
+.chip .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.chip.on{background:var(--on-bg);color:var(--on-ink)}.chip.on .dot{background:var(--on)}
+.chip.low{background:var(--low-bg);color:var(--low-ink)}.chip.low .dot{background:var(--low)}
+.chip.off{background:var(--off-bg);color:var(--off-ink)}.chip.off .dot{background:var(--off)}
+.btn{font-family:var(--sans);font-weight:600;font-size:15px;border:1px solid transparent;border-radius:14px;padding:13px 22px;cursor:pointer;line-height:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:transform .08s ease,background .15s ease,box-shadow .15s ease;text-decoration:none}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
+.btn-sun{background:var(--sun);color:oklch(0.22 0.04 50);box-shadow:var(--shadow-sm)}
+.btn-sun:hover{background:oklch(0.78 0.155 60)}
+.btn-primary{background:var(--ink);color:var(--bg)}
+.btn-primary:hover{background:oklch(0.30 0.015 60)}
+.btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.25);color:var(--bg)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.lift{transition:transform .14s ease,box-shadow .14s ease}
+.lift:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+@keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 oklch(0.745 0.155 58 / .35)}50%{box-shadow:0 0 0 10px oklch(0.745 0.155 58 / 0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+section{padding:96px 0}
+section.alt{background:var(--bg-2)}
+.section-hd{max-width:640px;margin-bottom:56px}
+.section-hd h2{font-size:clamp(32px,4vw,46px);letter-spacing:-0.025em;line-height:1.1;margin-top:12px}
+.section-hd p{font-size:16px;line-height:1.75;color:var(--ink-2);margin-top:14px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position:sticky;top:0;z-index:50;background:color-mix(in oklch,var(--bg) 85%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)">
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;height:60px">
+    <a href="#" style="display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)">
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none" style="color:var(--sun)">
+        <circle cx="20" cy="20" r="9" fill="currentColor"/>
+        <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+          <line x1="20" y1="3.5" x2="20" y2="9"/><line x1="20" y1="31" x2="20" y2="36.5"/>
+          <line x1="3.5" y1="20" x2="9" y2="20"/><line x1="31" y1="20" x2="36.5" y2="20"/>
+          <line x1="8" y1="8" x2="11.8" y2="11.8"/><line x1="28.2" y1="28.2" x2="32" y2="32"/>
+          <line x1="32" y1="8" x2="28.2" y2="11.8"/><line x1="11.8" y1="28.2" x2="8" y2="32"/>
+        </g>
+      </svg>
+      <span style="font-family:var(--display);font-size:17px;font-weight:700">Kane<b style="color:var(--sun-deep)">a</b></span>
+    </a>
+    <div class="hidden md:flex" style="gap:28px;align-items:center">
+      {['problem','solution','product','traction','market','team','ask'].map(s =>
+        `<a href="#${s}" style="font-size:13.5px;font-weight:500;color:var(--ink-2);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-2)'">${s.charAt(0).toUpperCase()+s.slice(1)}</a>`
+      ).join('')}
+    </div>
+    <a href="#ask" class="btn btn-sun" style="font-size:13px;padding:9px 18px">Schedule a call</a>
+  </div>
+</nav>
+
+<!-- plain nav links without template literals -->
+<script>
+document.querySelector('nav .hidden').innerHTML = ['problem','solution','product','traction','market','team','ask'].map(s =>
+  `<a href="#${s}" style="font-size:13.5px;font-weight:500;color:var(--ink-2);text-decoration:none;transition:color .15s ease" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--ink-2)'">${s.charAt(0).toUpperCase()+s.slice(1)}</a>`
+).join('');
+</script>
+
+<!-- ═══════════════════════════════════════════
+     1 · HERO
+════════════════════════════════════════════ -->
+<section id="hero" style="min-height:100svh;display:flex;align-items:center;background:radial-gradient(ellipse 70% 55% at 80% 5%, oklch(0.95 0.035 70 / .7), transparent), radial-gradient(ellipse 50% 35% at 10% 95%, oklch(0.95 0.035 70 / .4), transparent), var(--bg);padding:80px 0">
+  <div class="wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--sun-soft);border:1px solid color-mix(in oklch,var(--sun) 30%,transparent);border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--sun-deep);margin-bottom:24px;font-family:var(--mono);letter-spacing:.08em">
+        <svg width="14" height="14" viewBox="0 0 40 40" fill="none" style="color:var(--sun)"><circle cx="20" cy="20" r="9" fill="currentColor"/><g stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="3.5" x2="20" y2="8"/><line x1="20" y1="32" x2="20" y2="36.5"/><line x1="3.5" y1="20" x2="8" y2="20"/><line x1="32" y1="20" x2="36.5" y2="20"/></g></svg>
+        Ghana · Solar Utility
+      </div>
+      <h1 style="font-size:clamp(44px,5.5vw,74px);letter-spacing:-0.03em;line-height:1.04;margin-bottom:24px">Power as a service.<br><span style="color:var(--sun-deep)">Ghana, now.</span></h1>
+      <p style="font-size:18px;line-height:1.75;color:var(--ink-2);max-width:480px;margin-bottom:36px">We sell reliable electricity as a subscription. Customers never buy hardware — they pay (prepaid) for power. Kanea owns, monitors, and maintains the solar-plus-battery system.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px">
+        <a href="#traction" class="btn btn-sun" style="font-size:15px;padding:14px 26px">See the traction</a>
+        <a href="#ask" class="btn" style="background:var(--surface);border:1.5px solid var(--line-2);color:var(--ink);font-size:15px;padding:14px 26px">View the ask</a>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div style="background:var(--sun-soft);border:1px solid color-mix(in oklch,var(--sun) 25%,transparent);border-radius:10px;padding:10px 16px;font-family:var(--mono);font-size:13px;color:var(--sun-deep);font-weight:700">1,284 sites</div>
+        <div style="background:var(--on-bg);border:1px solid color-mix(in oklch,var(--on) 25%,transparent);border-radius:10px;padding:10px 16px;font-family:var(--mono);font-size:13px;color:var(--on-ink);font-weight:700">99.1% uptime</div>
+        <div style="background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 16px;font-family:var(--mono);font-size:13px;color:var(--ink-2);font-weight:700">₵41k MRR</div>
+      </div>
+    </div>
+
+    <!-- Right: Closed loop card -->
+    <div class="card" style="background:var(--ink);border-color:oklch(0.35 0.015 60);padding:36px;border-radius:28px">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:oklch(0.55 0.01 60);text-transform:uppercase;margin-bottom:20px">The closed loop</div>
+      <div style="display:flex;flex-direction:column;gap:3px">
+      <!-- Loop steps -->
+      <div id="loop-steps"></div>
+      <div style="margin-top:28px;padding-top:20px;border-top:1px solid oklch(0.35 0.015 60)">
+        <div style="font-size:13px;color:oklch(0.55 0.01 60);margin-bottom:8px">Zero balance = auto-disconnect. No balance, no power. No power, no ambiguity.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="chip on"><span class="dot"></span>Healthy</span>
+          <span class="chip low"><span class="dot"></span>Low balance</span>
+          <span class="chip off"><span class="dot"></span>Disconnected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll arrow -->
+  <div style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);animation:bounceY 1.8s ease-in-out infinite">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<script>
+(function(){
+  var steps=[
+    {label:'Customer pays (MoMo)',icon:'₵',color:'var(--sun)'},
+    {label:'Smart meter unlocks power',icon:'⚡',color:'var(--on)'},
+    {label:'Power flows to home/SME',icon:'🏠',color:'var(--on)'},
+    {label:'Balance depletes with usage',icon:'📉',color:'var(--low)'},
+    {label:'Low-balance warning sent',icon:'🔔',color:'var(--low)'},
+    {label:'Top up → auto-reconnect',icon:'↑',color:'var(--sun)'},
+  ];
+  var html=steps.map(function(s,i){
+    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid oklch(0.32 0.012 60)">'+
+      '<div style="width:32px;height:32px;border-radius:9px;background:oklch(0.30 0.015 60);display:flex;align-items:center;justify-content:center;font-size:14px;flex:none">'+s.icon+'</div>'+
+      '<div style="font-size:14px;color:oklch(0.82 0.008 72);font-family:var(--sans)">'+s.label+'</div>'+
+      (i<steps.length-1?'':'')+'</div>';
+  }).join('');
+  document.getElementById('loop-steps').innerHTML=html;
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════
+     2 · THE PROBLEM
+════════════════════════════════════════════ -->
+<section id="problem" class="alt">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">The problem</div>
+      <h2>Ghana's electricity crisis is a daily tax on every household and business.</h2>
+      <p>ECG's grid delivers power <strong style="color:var(--off-ink)">less than 70% of the time</strong> in many areas. Diesel generators cost 4–6× more per kWh. 1.3 billion people across sub-Saharan Africa live with this same reality.</p>
+    </div>
+
+    <!-- Pull quote -->
+    <div style="margin-bottom:48px">
+      <div class="num" style="font-size:clamp(42px,5vw,64px);font-weight:700;color:var(--sun-deep);line-height:1">1.3B</div>
+      <div style="font-size:18px;color:var(--ink-2);margin-top:8px;line-height:1.6">people in sub-Saharan Africa lack reliable electricity access.</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <!-- ECG Grid -->
+      <div class="card lift" style="padding:28px;background:var(--off-bg);border-color:color-mix(in oklch,var(--off) 25%,var(--off-bg))">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--off);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        </div>
+        <h3 style="font-size:20px;color:var(--off-ink);margin-bottom:12px">ECG Grid</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:14px;color:var(--off-ink);display:flex;gap:8px"><span>✕</span> &lt;70% uptime in many areas</li>
+          <li style="font-size:14px;color:var(--off-ink);display:flex;gap:8px"><span>✕</span> Load shedding with no warning</li>
+          <li style="font-size:14px;color:var(--off-ink);display:flex;gap:8px"><span>✕</span> Erratic billing, high losses</li>
+          <li style="font-size:14px;color:var(--off-ink);display:flex;gap:8px"><span>✕</span> Irreliable for SME operations</li>
+        </ul>
+      </div>
+
+      <!-- Diesel -->
+      <div class="card lift" style="padding:28px;background:var(--low-bg);border-color:color-mix(in oklch,var(--low) 25%,var(--low-bg))">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--low);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+        </div>
+        <h3 style="font-size:20px;color:var(--low-ink);margin-bottom:12px">Diesel Generator</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:14px;color:var(--low-ink);display:flex;gap:8px"><span>–</span> 4–6× more per kWh than grid</li>
+          <li style="font-size:14px;color:var(--low-ink);display:flex;gap:8px"><span>–</span> Constant fuel runs, noise, fumes</li>
+          <li style="font-size:14px;color:var(--low-ink);display:flex;gap:8px"><span>–</span> Heavy upfront capital cost</li>
+          <li style="font-size:14px;color:var(--low-ink);display:flex;gap:8px"><span>–</span> Maintenance burden on customer</li>
+        </ul>
+      </div>
+
+      <!-- Kanea -->
+      <div class="card lift" style="padding:28px;background:var(--on-bg);border-color:color-mix(in oklch,var(--on) 25%,var(--on-bg));transform:translateY(-4px);box-shadow:var(--shadow)">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--on);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+          <svg width="22" height="22" viewBox="0 0 40 40" fill="none" style="color:#fff"><circle cx="20" cy="20" r="9" fill="currentColor"/><g stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="20" y1="3.5" x2="20" y2="9"/><line x1="20" y1="31" x2="20" y2="36.5"/><line x1="3.5" y1="20" x2="9" y2="20"/><line x1="31" y1="20" x2="36.5" y2="20"/></g></svg>
+        </div>
+        <h3 style="font-size:20px;color:var(--on-ink);margin-bottom:12px">Kanea Solar</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:14px;color:var(--on-ink);display:flex;gap:8px"><span>✓</span> 99.1% fleet uptime delivered</li>
+          <li style="font-size:14px;color:var(--on-ink);display:flex;gap:8px"><span>✓</span> Zero upfront hardware cost</li>
+          <li style="font-size:14px;color:var(--on-ink);display:flex;gap:8px"><span>✓</span> Prepaid kWh — pay for what you use</li>
+          <li style="font-size:14px;color:var(--on-ink);display:flex;gap:8px"><span>✓</span> Owned &amp; maintained by Kanea</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     3 · THE SOLUTION
+════════════════════════════════════════════ -->
+<section id="solution">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">The solution</div>
+      <h2>Electricity as a subscription. No hardware purchase, ever.</h2>
+      <p>Kanea installs solar-plus-battery at the customer's site, owns the equipment, and charges only for power consumed. A smart meter is the spine — it meters usage and can remotely enable or disable power.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px">
+      <div class="card lift" style="padding:32px;text-align:center">
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--sun-soft);color:var(--sun);display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v6M12 18v4M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24"/></svg>
+        </div>
+        <h3 style="font-size:18px;margin-bottom:10px">Zero upfront cost</h3>
+        <p style="font-size:14.5px;line-height:1.7;color:var(--ink-2);margin:0">Kanea owns the panels, battery, and inverter. Customers pay nothing to get started — just subscribe and power flows.</p>
+      </div>
+      <div class="card lift" style="padding:32px;text-align:center">
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--sun-soft);color:var(--sun);display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 12 16 9"/><path d="M12 3v2M21 12h-2"/></svg>
+        </div>
+        <h3 style="font-size:18px;margin-bottom:10px">Pay only for kWh used</h3>
+        <p style="font-size:14.5px;line-height:1.7;color:var(--ink-2);margin:0">Prepaid metered model. ₵35/kWh residential, ₵32/kWh SME. Top up with MTN MoMo or Hubtel in seconds.</p>
+      </div>
+      <div class="card lift" style="padding:32px;text-align:center">
+        <div style="width:56px;height:56px;border-radius:16px;background:var(--sun-soft);color:var(--sun);display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 style="font-size:18px;margin-bottom:10px">Never cut without warning</h3>
+        <p style="font-size:14.5px;line-height:1.7;color:var(--ink-2);margin:0">Low-balance SMS + app alert before any disconnect. Grace period + partial keep-alive protect the customer. Hardship hold for vulnerable households.</p>
+      </div>
+    </div>
+
+    <!-- Flywheel -->
+    <div style="background:var(--ink);border-radius:24px;padding:40px;box-shadow:var(--shadow-lg)">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:oklch(0.55 0.01 60);margin-bottom:28px">The prepaid flywheel</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+        <div style="text-align:center;flex:1;min-width:100px">
+          <div style="width:56px;height:56px;border-radius:16px;background:oklch(0.32 0.015 60);color:var(--sun);display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7V5a2 2 0 0 1 2-2h12"/><circle cx="16" cy="13" r="1.4" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--bg)">Pay</div>
+          <div style="font-size:12px;color:oklch(0.55 0.01 60);margin-top:4px">MoMo / Hubtel</div>
+        </div>
+        <div style="color:var(--sun);font-size:22px;font-weight:300">›</div>
+        <div style="text-align:center;flex:1;min-width:100px">
+          <div style="width:56px;height:56px;border-radius:16px;background:oklch(0.32 0.015 60);color:var(--sun);display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+          </div>
+          <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--bg)">Unlock</div>
+          <div style="font-size:12px;color:oklch(0.55 0.01 60);margin-top:4px">Smart meter opens</div>
+        </div>
+        <div style="color:var(--sun);font-size:22px;font-weight:300">›</div>
+        <div style="text-align:center;flex:1;min-width:100px">
+          <div style="width:56px;height:56px;border-radius:16px;background:oklch(0.32 0.015 60);color:var(--sun);display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+          </div>
+          <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--bg)">Consume</div>
+          <div style="font-size:12px;color:oklch(0.55 0.01 60);margin-top:4px">kWh flow to site</div>
+        </div>
+        <div style="color:var(--sun);font-size:22px;font-weight:300">›</div>
+        <div style="text-align:center;flex:1;min-width:100px">
+          <div style="width:56px;height:56px;border-radius:16px;background:var(--sun-soft);color:var(--sun-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+          </div>
+          <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--bg)">Top up</div>
+          <div style="font-size:12px;color:oklch(0.55 0.01 60);margin-top:4px">Balance replenished</div>
+        </div>
+      </div>
+      <div style="margin-top:28px;padding-top:20px;border-top:1px solid oklch(0.32 0.015 60);font-size:14px;color:oklch(0.55 0.01 60);line-height:1.6">
+        <strong style="color:var(--sun)">No collections risk.</strong> Zero balance = auto-disconnect. Payment = instant reconnect. The meter enforces the contract, not a collections team.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     4 · PRODUCT
+════════════════════════════════════════════ -->
+<section id="product" class="alt">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">Product</div>
+      <h2>Three apps. One fleet.</h2>
+      <p>Customer pays on their phone, the field agent installs correctly, the ops team monitors 1,284 sites in real time. Each app is purpose-built for its user — but they share a single source of truth.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+
+      <!-- Customer App -->
+      <div class="card lift" style="overflow:hidden">
+        <div style="height:240px;background:linear-gradient(165deg,var(--sun-soft),var(--surface) 75%);padding:20px;position:relative;overflow:hidden">
+          <div style="background:var(--surface);border-radius:14px;padding:20px;box-shadow:var(--shadow)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span class="chip on"><span class="dot"></span>Power on</span>
+              <div style="width:32px;height:32px;border-radius:9px;background:var(--sun-soft);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:var(--display);color:var(--sun-deep)">A</div>
+            </div>
+            <div class="num" style="font-size:48px;font-weight:700;line-height:1;color:var(--ink)">31.0<span style="font-size:18px;color:var(--ink-3);font-weight:500"> kWh</span></div>
+            <div style="font-size:13px;color:var(--ink-2);margin-top:4px">≈ 8 days left · ≈ ₵10.85</div>
+            <div style="background:var(--sun);border-radius:10px;padding:10px;text-align:center;margin-top:12px;font-weight:700;font-size:14px;color:oklch(0.22 0.04 50)">⚡ Top up</div>
+          </div>
+        </div>
+        <div style="padding:22px">
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin-bottom:6px">Customer App</div>
+          <h3 style="font-size:18px;margin-bottom:8px">Pay, monitor, trust</h3>
+          <p style="font-size:14px;line-height:1.65;color:var(--ink-2);margin:0">Balance, top-up, usage charts, fault reporting, and "you saved ₵62 vs. diesel" — the emotional hook that drives retention.</p>
+        </div>
+      </div>
+
+      <!-- Field App -->
+      <div class="card lift" style="overflow:hidden">
+        <div style="height:240px;background:var(--bg-2);padding:20px;overflow:hidden">
+          <div style="display:flex;gap:4px;margin-bottom:14px">
+            <div style="flex:1;height:5px;border-radius:3px;background:var(--sun)"></div>
+            <div style="flex:1;height:5px;border-radius:3px;background:var(--sun)"></div>
+            <div style="flex:1;height:5px;border-radius:3px;background:var(--line)"></div>
+            <div style="flex:1;height:5px;border-radius:3px;background:var(--line)"></div>
+            <div style="flex:1;height:5px;border-radius:3px;background:var(--line)"></div>
+          </div>
+          <div id="field-steps"></div>
+        </div>
+        <div style="padding:22px">
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin-bottom:6px">Field App</div>
+          <h3 style="font-size:18px;margin-bottom:8px">Onboard, install, resolve</h3>
+          <p style="font-size:14px;line-height:1.65;color:var(--ink-2);margin:0">Offline-first. Agents onboard in rural areas with no data. Commissioning checklist gates site activation. Resolving a fault requires photo evidence.</p>
+        </div>
+      </div>
+
+      <!-- Ops Dashboard -->
+      <div class="card lift" style="overflow:hidden">
+        <div style="height:240px;background:var(--ink);padding:16px;overflow:hidden">
+          <div id="ops-mock"></div>
+        </div>
+        <div style="padding:22px">
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;margin-bottom:6px">Ops Dashboard</div>
+          <h3 style="font-size:18px;margin-bottom:8px">Run the fleet</h3>
+          <p style="font-size:14px;line-height:1.65;color:var(--ink-2);margin:0">Exceptions queue, collections with hardship hold, fleet map, site 360 with append-only ledger. The durable moat — data that prices risk.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+// Field app steps mock
+document.getElementById('field-steps').innerHTML = [
+  {done:true, label:'Customer & KYC', sub:'Name, phone, ID captured'},
+  {done:true, label:'Site survey', sub:'GPS tagged · 3 photos'},
+  {done:false, label:'Install capture', sub:'Scan device serials'},
+].map(function(s){
+  return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)">' +
+    '<div style="width:22px;height:22px;border-radius:50%;background:'+(s.done?'var(--on)':'var(--surface)')+';border:'+(s.done?'none':'2px solid var(--line-2)')+';display:flex;align-items:center;justify-content:center;flex:none">' +
+    (s.done?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>':'')+'</div>'+
+    '<div><div style="font-size:13.5px;font-weight:600;color:'+(s.done?'var(--ink)':'var(--ink-2)')+'">'+s.label+'</div><div style="font-size:11.5px;color:var(--ink-3)">'+s.sub+'</div></div></div>';
+}).join('');
+
+// Ops dashboard mock
+document.getElementById('ops-mock').innerHTML =
+  '<div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:oklch(0.55 0.01 60);text-transform:uppercase;margin-bottom:10px">EXCEPTIONS · 6 active</div>'+
+  [
+    {t:'Meter offline',s:'GH-Kumasi-0421',sev:'off'},
+    {t:'Battery health critical',s:'GH-Tamale-0188',sev:'off'},
+    {t:'Abnormal usage',s:'GH-Accra-1043',sev:'low'},
+  ].map(function(r){
+    var c=r.sev==='off'?'var(--off)':'var(--low)';
+    var bg=r.sev==='off'?'oklch(0.30 0.03 27)':'oklch(0.30 0.02 78)';
+    return '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:oklch(0.28 0.012 60);border-radius:8px;margin-bottom:5px">'+
+      '<div style="width:8px;height:8px;border-radius:50%;background:'+c+';flex:none"></div>'+
+      '<div style="flex:1;font-size:12.5px;color:oklch(0.85 0.008 70)">'+r.t+'</div>'+
+      '<div style="font-size:11px;color:oklch(0.55 0.01 60);font-family:var(--mono)">'+r.s+'</div></div>';
+  }).join('');
+// field progress dots
+document.querySelector('#product .card .field-prog')
+</script>
+<script>
+// Fix field progress dots
+var fp=document.querySelectorAll('.field-prog-dot');
+</script>
+
+<!-- ═══════════════════════════════════════════
+     5 · BUSINESS MODEL
+════════════════════════════════════════════ -->
+<section id="model">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">Business model</div>
+      <h2>Prepaid metered. Revenue follows power.</h2>
+      <p>Customers pay per kWh consumed. No credit risk. No bad debt. The smart meter enforces payment before power flows — just like a prepaid mobile SIM.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+
+      <!-- Left: unit economics -->
+      <div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px">
+          <div class="card" style="padding:22px;text-align:center">
+            <div class="num" style="font-size:36px;font-weight:700;color:var(--sun-deep)">₵35</div>
+            <div style="font-size:13px;color:var(--ink-3);margin-top:4px">/kWh · Residential</div>
+          </div>
+          <div class="card" style="padding:22px;text-align:center">
+            <div class="num" style="font-size:36px;font-weight:700;color:var(--sun-deep)">₵32</div>
+            <div style="font-size:13px;color:var(--ink-3);margin-top:4px">/kWh · SME</div>
+          </div>
+          <div class="card" style="padding:22px;text-align:center">
+            <div class="num" style="font-size:28px;font-weight:700;color:var(--ink)">4 kWh</div>
+            <div style="font-size:13px;color:var(--ink-3);margin-top:4px">Avg daily consumption</div>
+          </div>
+          <div class="card" style="padding:22px;text-align:center">
+            <div class="num" style="font-size:28px;font-weight:700;color:var(--on-ink)">₵612</div>
+            <div style="font-size:13px;color:var(--ink-3);margin-top:4px">Avg customer LTV</div>
+          </div>
+        </div>
+
+        <!-- Moat callout -->
+        <div style="background:var(--on-bg);border:1px solid color-mix(in oklch,var(--on) 30%,var(--on-bg));border-radius:16px;padding:22px">
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink);margin-bottom:8px;font-weight:700">MOAT</div>
+          <div style="font-size:15px;font-weight:700;color:var(--on-ink);margin-bottom:6px">Zero collections risk</div>
+          <div style="font-size:14px;line-height:1.65;color:var(--on-ink)">Balance hits zero → 24h grace + keep-alive → auto-disconnect. Payment → instant reconnect. No bad debt. No collections team. No write-offs.</div>
+        </div>
+      </div>
+
+      <!-- Right: plans table -->
+      <div class="card" style="overflow:hidden">
+        <div style="padding:20px 22px;border-bottom:1px solid var(--line);background:var(--bg-2)">
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Subscription plans</div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <thead>
+            <tr style="background:var(--bg-2)">
+              <th style="padding:12px 18px;text-align:left;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)">Plan</th>
+              <th style="padding:12px 18px;text-align:right;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)">Capacity</th>
+              <th style="padding:12px 18px;text-align:right;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)">Price</th>
+              <th style="padding:12px 18px;text-align:right;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)">Segment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:16px 18px;font-weight:600">Home 0.8kW</td>
+              <td style="padding:16px 18px;text-align:right;color:var(--ink-2)">0.8 kW</td>
+              <td style="padding:16px 18px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--sun-deep)">₵35/kWh</td>
+              <td style="padding:16px 18px;text-align:right"><span class="chip on" style="font-size:11px"><span class="dot"></span>Residential</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:16px 18px;font-weight:600">Home 1.2kW</td>
+              <td style="padding:16px 18px;text-align:right;color:var(--ink-2)">1.2 kW</td>
+              <td style="padding:16px 18px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--sun-deep)">₵35/kWh</td>
+              <td style="padding:16px 18px;text-align:right"><span class="chip on" style="font-size:11px"><span class="dot"></span>Residential</span></td>
+            </tr>
+            <tr style="background:var(--sun-soft)">
+              <td style="padding:16px 18px;font-weight:700;color:var(--sun-deep)">SME 3kW</td>
+              <td style="padding:16px 18px;text-align:right;color:var(--sun-ink)">3 kW</td>
+              <td style="padding:16px 18px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--sun-deep)">₵32/kWh +<br><span style="font-size:12px">₵5,000 base</span></td>
+              <td style="padding:16px 18px;text-align:right"><span class="chip low" style="font-size:11px"><span class="dot"></span>SME</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     6 · TRACTION
+════════════════════════════════════════════ -->
+<section id="traction" class="alt">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">Traction</div>
+      <h2>Real sites. Real customers. Growing fast.</h2>
+      <p>1,284 deployed sites across 4 regions of Ghana. Monthly top-up volume has grown 87% in six months with zero paid marketing.</p>
+    </div>
+
+    <!-- KPI tiles -->
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:40px">
+      <div class="card" style="padding:22px;text-align:center">
+        <div class="num" style="font-size:34px;font-weight:700">1,284</div>
+        <div style="font-size:12px;color:var(--ink-3);margin-top:5px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase">Sites deployed</div>
+      </div>
+      <div class="card" style="padding:22px;text-align:center">
+        <div class="num" style="font-size:34px;font-weight:700">1,251</div>
+        <div style="font-size:12px;color:var(--ink-3);margin-top:5px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase">Active subs</div>
+      </div>
+      <div class="card" style="padding:22px;text-align:center">
+        <div class="num" style="font-size:34px;font-weight:700;color:var(--on-ink)">99.1<span style="font-size:18px">%</span></div>
+        <div style="font-size:12px;color:var(--ink-3);margin-top:5px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase">Fleet uptime</div>
+      </div>
+      <div class="card" style="padding:22px;text-align:center">
+        <div class="num" style="font-size:34px;font-weight:700;color:var(--sun-deep)">+38</div>
+        <div style="font-size:12px;color:var(--ink-3);margin-top:5px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase">Net adds/mo</div>
+      </div>
+      <div class="card" style="padding:22px;text-align:center">
+        <div class="num" style="font-size:34px;font-weight:700">96.2<span style="font-size:18px">%</span></div>
+        <div style="font-size:12px;color:var(--ink-3);margin-top:5px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase">Meters online</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:start">
+
+      <!-- Bar chart -->
+      <div class="card" style="padding:32px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+          <div style="font-size:15px;font-weight:600">Monthly top-up volume</div>
+          <div class="num" style="font-size:13px;font-weight:700;color:var(--on);background:var(--on-bg);border-radius:999px;padding:4px 10px">+87% in 6 months</div>
+        </div>
+        <div style="font-size:13px;color:var(--ink-3);margin-bottom:24px">GHS thousands · Dec 2025 – May 2026</div>
+        <div style="display:flex;align-items:flex-end;gap:10px;height:160px;padding-top:8px;border-bottom:1px solid var(--line)">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end">
+            <span style="font-size:12px;font-weight:600;color:var(--ink-2);font-family:var(--mono)">22k</span>
+            <div style="width:100%;height:86px;background:var(--sun-soft);border-radius:6px 6px 0 0;border-top:2px solid var(--sun)"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end">
+            <span style="font-size:12px;font-weight:600;color:var(--ink-2);font-family:var(--mono)">26k</span>
+            <div style="width:100%;height:101px;background:var(--sun-soft);border-radius:6px 6px 0 0;border-top:2px solid var(--sun)"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end">
+            <span style="font-size:12px;font-weight:600;color:var(--ink-2);font-family:var(--mono)">29k</span>
+            <div style="width:100%;height:113px;background:var(--sun-soft);border-radius:6px 6px 0 0;border-top:2px solid var(--sun)"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end">
+            <span style="font-size:12px;font-weight:600;color:var(--ink-2);font-family:var(--mono)">31k</span>
+            <div style="width:100%;height:121px;background:var(--sun-soft);border-radius:6px 6px 0 0;border-top:2px solid var(--sun)"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end">
+            <span style="font-size:12px;font-weight:600;color:var(--ink-2);font-family:var(--mono)">35k</span>
+            <div style="width:100%;height:136px;background:var(--sun-soft);border-radius:6px 6px 0 0;border-top:2px solid var(--sun)"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end">
+            <span style="font-size:12px;font-weight:700;color:var(--sun-deep);font-family:var(--mono);white-space:nowrap">41k</span>
+            <div style="width:100%;height:160px;background:var(--sun);border-radius:6px 6px 0 0"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <span style="flex:1;text-align:center;font-size:11.5px;color:var(--ink-3);font-family:var(--mono)">Dec</span>
+          <span style="flex:1;text-align:center;font-size:11.5px;color:var(--ink-3);font-family:var(--mono)">Jan</span>
+          <span style="flex:1;text-align:center;font-size:11.5px;color:var(--ink-3);font-family:var(--mono)">Feb</span>
+          <span style="flex:1;text-align:center;font-size:11.5px;color:var(--ink-3);font-family:var(--mono)">Mar</span>
+          <span style="flex:1;text-align:center;font-size:11.5px;color:var(--ink-3);font-family:var(--mono)">Apr</span>
+          <span style="flex:1;text-align:center;font-size:11.5px;color:var(--sun-deep);font-family:var(--mono);font-weight:700">May</span>
+        </div>
+      </div>
+
+      <!-- Ghana map -->
+      <div class="card" style="overflow:hidden">
+        <div style="padding:18px 20px;border-bottom:1px solid var(--line)">
+          <div style="font-size:15px;font-weight:600">Regional presence</div>
+          <div style="font-size:13px;color:var(--ink-3);margin-top:2px">4 hubs · 4 regions</div>
+        </div>
+        <div style="height:280px;position:relative;background:repeating-linear-gradient(135deg,var(--bg-2),var(--bg-2) 10px,var(--bg) 10px,var(--bg) 20px)">
+          <div style="position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:40px 40px;opacity:.4"></div>
+          <!-- Accra -->
+          <div style="position:absolute;top:68%;left:40%;transform:translate(-50%,-50%)">
+            <div style="width:14px;height:14px;border-radius:50%;background:var(--sun);animation:pulse 2s ease-in-out infinite;cursor:pointer"></div>
+            <div style="position:absolute;top:18px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-family:var(--mono);color:var(--ink-2);background:var(--surface);padding:2px 8px;border-radius:5px;box-shadow:var(--shadow-sm);border:1px solid var(--line)">Accra · 641 sites</div>
+          </div>
+          <!-- Kumasi -->
+          <div style="position:absolute;top:50%;left:27%;transform:translate(-50%,-50%)">
+            <div style="width:12px;height:12px;border-radius:50%;background:var(--sun);animation:pulse 2s ease-in-out .4s infinite"></div>
+            <div style="position:absolute;top:16px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-family:var(--mono);color:var(--ink-2);background:var(--surface);padding:2px 8px;border-radius:5px;box-shadow:var(--shadow-sm);border:1px solid var(--line)">Kumasi · 388 sites</div>
+          </div>
+          <!-- Tamale -->
+          <div style="position:absolute;top:22%;left:33%;transform:translate(-50%,-50%)">
+            <div style="width:11px;height:11px;border-radius:50%;background:var(--low);animation:pulse 2s ease-in-out .8s infinite"></div>
+            <div style="position:absolute;top:15px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-family:var(--mono);color:var(--ink-2);background:var(--surface);padding:2px 8px;border-radius:5px;box-shadow:var(--shadow-sm);border:1px solid var(--line)">Tamale · 142 sites</div>
+          </div>
+          <!-- Cape Coast -->
+          <div style="position:absolute;top:72%;left:22%;transform:translate(-50%,-50%)">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--on);animation:pulse 2s ease-in-out 1.2s infinite"></div>
+            <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-family:var(--mono);color:var(--ink-2);background:var(--surface);padding:2px 8px;border-radius:5px;box-shadow:var(--shadow-sm);border:1px solid var(--line)">Cape Coast · 113 sites</div>
+          </div>
+          <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--ink-3);font-family:var(--mono);background:var(--surface);padding:6px 14px;border-radius:8px;box-shadow:var(--shadow-sm);white-space:nowrap">GHANA · live fleet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     7 · MARKET
+════════════════════════════════════════════ -->
+<section id="market">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">Market opportunity</div>
+      <h2>A continent-scale problem with a proven willingness to pay.</h2>
+      <p>Prepaid grid meters are ubiquitous in Ghana — customers already understand "buy units, deplete, top up." Kanea maps onto existing behaviour and upgrades the power source.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:64px;align-items:center">
+
+      <!-- Concentric circles -->
+      <div style="position:relative;width:280px;height:280px;flex:none">
+        <div style="position:absolute;inset:0;border-radius:50%;border:2px dashed var(--line-2);display:flex;align-items:center;justify-content:center">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:11px;font-family:var(--mono);color:var(--ink-3);white-space:nowrap">TAM · Sub-Saharan Africa</div>
+        </div>
+        <div style="position:absolute;inset:44px;border-radius:50%;background:oklch(0.955 0.055 84 / .3);border:1.5px solid oklch(0.74 0.135 78 / .4);display:flex;align-items:center;justify-content:center">
+          <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:11px;font-family:var(--mono);color:var(--low-ink);white-space:nowrap">SAM · Ghana</div>
+        </div>
+        <div style="position:absolute;inset:92px;border-radius:50%;background:var(--sun-soft);border:2px solid var(--sun);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center">
+          <div class="num" style="font-size:22px;font-weight:700;color:var(--sun-deep)">50k</div>
+          <div style="font-size:10px;color:var(--sun-ink);font-family:var(--mono)">sites Yr 3</div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <div style="border-left:3px solid var(--line-2);padding-left:20px">
+          <div class="num" style="font-size:42px;font-weight:700;color:var(--ink)">₵21B</div>
+          <div style="font-size:15px;font-weight:600;margin-top:2px">TAM — Sub-Saharan Africa electricity market</div>
+          <div style="font-size:14px;color:var(--ink-2);margin-top:4px;line-height:1.6">600M+ people without reliable power. Solar-as-a-service addresses all of them with the same model.</div>
+        </div>
+        <div style="border-left:3px solid var(--low);padding-left:20px">
+          <div class="num" style="font-size:42px;font-weight:700;color:var(--low-ink)">₵2.5B</div>
+          <div style="font-size:15px;font-weight:600;margin-top:2px">SAM — Ghana addressable market</div>
+          <div style="font-size:14px;color:var(--ink-2);margin-top:4px;line-height:1.6">32M population · ~7M households · 60%+ experiencing unreliable or no grid power. SME segment adds 40% to revenue at ₵32/kWh.</div>
+        </div>
+        <div style="border-left:3px solid var(--sun);padding-left:20px">
+          <div class="num" style="font-size:42px;font-weight:700;color:var(--sun-deep)">₵252M</div>
+          <div style="font-size:15px;font-weight:600;margin-top:2px">SOM — 50,000 sites by Year 3</div>
+          <div style="font-size:14px;color:var(--ink-2);margin-top:4px;line-height:1.6">Conservative capture of &lt;1% of Ghana's addressable market. Current run-rate points directly toward this milestone.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     8 · WHY NOW / WHY US
+════════════════════════════════════════════ -->
+<section id="moat" class="alt">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">Why Kanea wins</div>
+      <h2>Three moats. All compounding.</h2>
+      <p>Each advantage reinforces the others. The smart meter creates data. The data prices risk. The prepaid model eliminates collections. Offline ops reaches where others can't.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <div class="lift" style="background:linear-gradient(150deg,oklch(0.28 0.015 60),var(--ink));border-radius:20px;padding:32px;box-shadow:var(--shadow)">
+        <div style="width:48px;height:48px;border-radius:14px;background:var(--sun-soft);color:var(--sun);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 12 16 9M12 3v2M21 12h-2"/></svg>
+        </div>
+        <h3 style="font-size:19px;color:var(--bg);margin-bottom:10px">Smart-meter spine</h3>
+        <p style="font-size:14px;line-height:1.7;color:oklch(0.72 0.01 70);margin:0">The meter is both the billing instrument and the remote enable/disable switch. No other residential solar player in Ghana has this at scale. It is financeability and service quality in one device.</p>
+      </div>
+      <div class="lift" style="background:linear-gradient(150deg,oklch(0.28 0.015 60),var(--ink));border-radius:20px;padding:32px;box-shadow:var(--shadow)">
+        <div style="width:48px;height:48px;border-radius:14px;background:var(--sun-soft);color:var(--sun);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7V5a2 2 0 0 1 2-2h12"/></svg>
+        </div>
+        <h3 style="font-size:19px;color:var(--bg);margin-bottom:10px">Prepaid = zero credit risk</h3>
+        <p style="font-size:14px;line-height:1.7;color:oklch(0.72 0.01 70);margin:0">Power follows payment. Period. No arrears, no collections debt, no write-offs. The model self-enforces. Cash flow is predictable. Investors get a utility with the credit profile of a SaaS business.</p>
+      </div>
+      <div class="lift" style="background:linear-gradient(150deg,oklch(0.28 0.015 60),var(--ink));border-radius:20px;padding:32px;box-shadow:var(--shadow)">
+        <div style="width:48px;height:48px;border-radius:14px;background:var(--sun-soft);color:var(--sun);display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.6-1.5A4 4 0 0 0 6 16.9"/><path d="M12 12v8M9 17l3 3 3-3"/></svg>
+        </div>
+        <h3 style="font-size:19px;color:var(--bg);margin-bottom:10px">Offline-first + USSD reach</h3>
+        <p style="font-size:14px;line-height:1.7;color:oklch(0.72 0.01 70);margin:0">Agents onboard customers in rural Ghana with zero data connectivity. Feature-phone customers top up via *123#. Mass-market reach that smartphone-only competitors cannot replicate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     9 · GO-TO-MARKET
+════════════════════════════════════════════ -->
+<section id="gtm">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">Go-to-market</div>
+      <h2>Agent-led expansion, word-of-mouth flywheel.</h2>
+      <p>Each installed system is a billboard. "You saved ₵62 this month vs. diesel" is the referral that sells the next customer. Agents earn on installations; field software makes every install auditable.</p>
+    </div>
+
+    <!-- Phase stepper -->
+    <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:48px">
+      <div style="position:absolute;top:22px;left:12.5%;width:75%;height:2px;background:var(--line-2);z-index:0"></div>
+      <div id="gtm-phases"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <div class="card" style="padding:24px">
+        <div style="width:40px;height:40px;border-radius:11px;background:var(--sun-soft);color:var(--sun-deep);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5.5 21a7.5 7.5 0 0 1 13 0"/></svg>
+        </div>
+        <h3 style="font-size:16px;margin-bottom:8px">Agent-led sales</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--ink-2);margin:0">Commission-based agents onboard customers door-to-door. The field app makes each installation auditable — KYC, geo-tag, device serials, commissioning checklist. Quality is built into the process.</p>
+      </div>
+      <div class="card" style="padding:24px">
+        <div style="width:40px;height:40px;border-radius:11px;background:var(--sun-soft);color:var(--sun-deep);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 10h10M7 14h6"/></svg>
+        </div>
+        <h3 style="font-size:16px;margin-bottom:8px">USSD · SMS reach</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--ink-2);margin:0">*123# works on any phone with no data. Balance check, top-up, fault report. Reaches the 60%+ of Ghanaians on feature phones. SMS alerts create urgency without requiring app engagement.</p>
+      </div>
+      <div class="card" style="padding:24px">
+        <div style="width:40px;height:40px;border-radius:11px;background:var(--on-bg);color:var(--on);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+        </div>
+        <h3 style="font-size:16px;margin-bottom:8px">Word-of-mouth flywheel</h3>
+        <p style="font-size:14px;line-height:1.65;color:var(--ink-2);margin:0">"You saved ₵62 this month vs. diesel · 99.4% uptime" — the app shows this prominently. Every satisfied customer tells neighbours. The savings story sells itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+var phases=[
+  {n:1,label:'Greater Accra',sub:'1,284 sites deployed',active:true},
+  {n:2,label:'Ashanti',sub:'Kumasi expansion',active:false},
+  {n:3,label:'Northern Ghana',sub:'Tamale · rural focus',active:false},
+  {n:4,label:'Pan-Africa',sub:'Ghana → West Africa',active:false},
+];
+document.getElementById('gtm-phases').style.cssText='display:contents';
+document.getElementById('gtm-phases').outerHTML='<div style="position:relative;display:contents">'+phases.map(function(p){
+  return '<div style="text-align:center;position:relative;z-index:1">'+
+    '<div style="width:44px;height:44px;border-radius:50%;background:'+(p.active?'var(--sun)':'var(--surface)')+';border:2px solid '+(p.active?'var(--sun)':'var(--line-2)')+';display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-family:var(--display);font-weight:700;font-size:16px;color:'+(p.active?'oklch(0.22 0.04 50)':'var(--ink-3)')+'">'+p.n+'</div>'+
+    '<div style="font-size:14px;font-weight:700;color:'+(p.active?'var(--ink)':'var(--ink-2)')+'">'+p.label+'</div>'+
+    '<div style="font-size:12.5px;color:var(--ink-3);margin-top:4px">'+p.sub+'</div></div>';
+}).join('')+'</div>';
+// Re-render phases after DOM ready
+document.addEventListener('DOMContentLoaded',function(){});
+</script>
+<script>
+// Phases stepper – works around the outerHTML trick
+(function(){
+var container=document.querySelector('#gtm > .wrap > div:nth-child(2)');
+if(!container)return;
+var phases=[
+  {n:1,label:'Greater Accra',sub:'1,284 sites deployed',active:true},
+  {n:2,label:'Ashanti',sub:'Kumasi expansion',active:false},
+  {n:3,label:'Northern Ghana',sub:'Tamale · rural focus',active:false},
+  {n:4,label:'Pan-Africa',sub:'Ghana → West Africa',active:false},
+];
+container.innerHTML='';
+phases.forEach(function(p){
+  var el=document.createElement('div');
+  el.style.cssText='text-align:center;position:relative;z-index:1';
+  el.innerHTML='<div style="width:44px;height:44px;border-radius:50%;background:'+(p.active?'var(--sun)':'var(--surface)')+';border:2px solid '+(p.active?'var(--sun)':'var(--line-2)')+';display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-family:var(--display);font-weight:700;font-size:16px;color:'+(p.active?'oklch(0.22 0.04 50)':'var(--ink-3)')+'">'+p.n+'</div>'+
+    '<div style="font-size:14px;font-weight:700;color:'+(p.active?'var(--ink)':'var(--ink-2)')+'">'+p.label+'</div>'+
+    '<div style="font-size:12.5px;color:var(--ink-3);margin-top:4px">'+p.sub+'</div>';
+  container.appendChild(el);
+});
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════
+     10 · TEAM
+════════════════════════════════════════════ -->
+<section id="team" class="alt">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">Founding team</div>
+      <h2>Built by people who've done this before.</h2>
+      <p>Deep expertise across off-grid energy, embedded systems, and African fintech. We've lived the problem and built the solution.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+      <div class="card lift" style="padding:28px;text-align:center">
+        <div style="width:72px;height:72px;border-radius:50%;background:var(--sun-soft);color:var(--sun-deep);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:22px;margin:0 auto 14px">AB</div>
+        <div style="font-family:var(--display);font-size:17px;font-weight:700">Ama Boateng</div>
+        <div style="font-size:13px;color:var(--sun-deep);font-weight:600;margin:5px 0 10px">Co-Founder &amp; CEO</div>
+        <p style="font-size:13.5px;color:var(--ink-2);line-height:1.65;margin:0">10 years in off-grid energy across West Africa. Previously led deployments at Bboxx and Zola Electric.</p>
+      </div>
+      <div class="card lift" style="padding:28px;text-align:center">
+        <div style="width:72px;height:72px;border-radius:50%;background:var(--sun-soft);color:var(--sun-deep);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:22px;margin:0 auto 14px">KM</div>
+        <div style="font-family:var(--display);font-size:17px;font-weight:700">Kwesi Mensah</div>
+        <div style="font-size:13px;color:var(--sun-deep);font-weight:600;margin:5px 0 10px">Co-Founder &amp; CTO</div>
+        <p style="font-size:13.5px;color:var(--ink-2);line-height:1.65;margin:0">Embedded systems &amp; IoT engineer. Previously built metering infrastructure at Angaza. Holds 2 patents in smart-meter firmware.</p>
+      </div>
+      <div class="card lift" style="padding:28px;text-align:center">
+        <div style="width:72px;height:72px;border-radius:50%;background:var(--sun-soft);color:var(--sun-deep);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:22px;margin:0 auto 14px">EO</div>
+        <div style="font-family:var(--display);font-size:17px;font-weight:700">Emmanuel Osei</div>
+        <div style="font-size:13px;color:var(--sun-deep);font-weight:600;margin:5px 0 10px">COO</div>
+        <p style="font-size:13.5px;color:var(--ink-2);line-height:1.65;margin:0">Operations &amp; logistics across 6 African markets. Previously head of field operations at Africa's Talking. 200+ agent network built and managed.</p>
+      </div>
+      <div class="card lift" style="padding:28px;text-align:center">
+        <div style="width:72px;height:72px;border-radius:50%;background:var(--sun-soft);color:var(--sun-deep);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:22px;margin:0 auto 14px">YA</div>
+        <div style="font-family:var(--display);font-size:17px;font-weight:700">Yaa Asante</div>
+        <div style="font-size:13px;color:var(--sun-deep);font-weight:600;margin:5px 0 10px">Head of Growth</div>
+        <p style="font-size:13.5px;color:var(--ink-2);line-height:1.65;margin:0">Mobile money &amp; consumer growth. Previously grew MTN MoMo's merchant network to 80k+ agents in Ghana. Deep telco partnerships.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     11 · FINANCIALS
+════════════════════════════════════════════ -->
+<section id="financials">
+  <div class="wrap">
+    <div class="section-hd">
+      <div class="eyebrow">Financials</div>
+      <h2>A clear path to ₵252M ARR by Year 3.</h2>
+      <p>Unit economics are proven at 1,284 sites. Scaling is a function of fleet deployment speed and agent network growth — both are operational, not technological, challenges.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start">
+
+      <!-- Projections table -->
+      <div class="card" style="overflow:hidden">
+        <div style="padding:18px 22px;border-bottom:1px solid var(--line);background:var(--bg-2)">
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">Revenue projections · formula: sites × 4kWh/d × 30d × ₵35 × 12</div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <thead>
+            <tr style="background:var(--bg-2)">
+              <th style="padding:12px 20px;text-align:left;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)"></th>
+              <th style="padding:12px 20px;text-align:right;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)">Year 1</th>
+              <th style="padding:12px 20px;text-align:right;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)">Year 2</th>
+              <th style="padding:12px 20px;text-align:right;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--sun-deep);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line)">Year 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:15px 20px;font-weight:600;color:var(--ink-2)">Sites deployed</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700">2,500</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700">12,000</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--sun-deep);border-left:3px solid var(--sun)">50,000</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:15px 20px;font-weight:600;color:var(--ink-2)">ARR (GHS)</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700">₵12.6M</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700">₵60.5M</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--sun-deep);border-left:3px solid var(--sun)">₵252M</td>
+            </tr>
+            <tr>
+              <td style="padding:15px 20px;font-weight:600;color:var(--ink-2)">Net adds / month</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700">~104</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700">~792</td>
+              <td style="padding:15px 20px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--sun-deep);border-left:3px solid var(--sun)">~3,167</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Use of funds -->
+      <div>
+        <div class="card" style="padding:28px;margin-bottom:20px">
+          <div style="font-size:15px;font-weight:700;margin-bottom:18px">Use of funds</div>
+          <div style="height:48px;border-radius:12px;overflow:hidden;display:flex;margin-bottom:16px">
+            <div style="width:50%;background:var(--sun);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:oklch(0.22 0.04 50)">Fleet 50%</div>
+            <div style="width:30%;background:var(--sun-soft);border-left:2px solid var(--surface);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--sun-deep)">Tech 30%</div>
+            <div style="width:20%;background:var(--bg-2);border-left:2px solid var(--surface);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--ink-2)">WC 20%</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:var(--ink-2)">Fleet deployment (hardware + install)</span><span class="num" style="font-weight:700">50%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:var(--ink-2)">Tech, ops &amp; team</span><span class="num" style="font-weight:700">30%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:var(--ink-2)">Working capital &amp; contingency</span><span class="num" style="font-weight:700">20%</span></div>
+          </div>
+        </div>
+        <div class="card" style="padding:22px;background:var(--sun-soft);border-color:color-mix(in oklch,var(--sun) 25%,transparent)">
+          <div style="font-size:13px;color:var(--sun-ink);font-weight:600;margin-bottom:4px">Current MRR trajectory</div>
+          <div class="num" style="font-size:32px;font-weight:700;color:var(--sun-deep)">₵41k</div>
+          <div style="font-size:13px;color:var(--sun-ink);margin-top:4px">May 2026 · growing 87% in 6 months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     12 · THE ASK
+════════════════════════════════════════════ -->
+<section id="ask" style="background:var(--ink);padding:100px 0">
+  <div class="wrap" style="text-align:center;max-width:700px">
+    <div style="font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--sun);margin-bottom:16px">Join the round</div>
+    <h2 style="font-size:clamp(48px,6vw,72px);letter-spacing:-0.03em;line-height:1.04;color:var(--bg);margin-bottom:20px">Raising<br><span style="color:var(--sun)">$2M Seed</span></h2>
+    <p style="font-size:17px;line-height:1.75;color:oklch(0.72 0.01 70);margin-bottom:40px">Fleet expansion to 2,500 sites · hiring operations and engineering · working capital for hardware procurement.</p>
+
+    <div style="display:flex;justify-content:center;gap:14px;margin-bottom:56px;flex-wrap:wrap">
+      <a href="mailto:invest@kanea.africa" class="btn btn-sun" style="font-size:16px;padding:16px 30px">Schedule a call</a>
+      <a href="#" class="btn btn-ghost" style="font-size:16px;padding:16px 30px">Download one-pager</a>
+    </div>
+
+    <div style="border-top:1px solid oklch(0.32 0.012 60);padding-top:36px">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:32px">
+        <div style="text-align:center">
+          <div class="num" style="font-size:32px;font-weight:700;color:var(--bg)">1,284</div>
+          <div style="font-size:13px;color:oklch(0.55 0.01 60);margin-top:4px">Sites today</div>
+        </div>
+        <div style="text-align:center">
+          <div class="num" style="font-size:32px;font-weight:700;color:var(--sun)">99.1%</div>
+          <div style="font-size:13px;color:oklch(0.55 0.01 60);margin-top:4px">Fleet uptime</div>
+        </div>
+        <div style="text-align:center">
+          <div class="num" style="font-size:32px;font-weight:700;color:var(--bg)">₵252M</div>
+          <div style="font-size:13px;color:oklch(0.55 0.01 60);margin-top:4px">ARR target · Yr 3</div>
+        </div>
+      </div>
+      <div style="font-size:14px;color:oklch(0.45 0.01 60)">
+        invest@kanea.africa &nbsp;·&nbsp; kanea.africa &nbsp;·&nbsp; Accra, Ghana
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer style="background:oklch(0.18 0.01 60);padding:24px 0;text-align:center">
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px">
+    <svg width="20" height="20" viewBox="0 0 40 40" fill="none" style="color:var(--sun)"><circle cx="20" cy="20" r="9" fill="currentColor"/><g stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="20" y1="3.5" x2="20" y2="9"/><line x1="20" y1="31" x2="20" y2="36.5"/><line x1="3.5" y1="20" x2="9" y2="20"/><line x1="31" y1="20" x2="36.5" y2="20"/></g></svg>
+    <span style="font-family:var(--display);font-size:14px;color:oklch(0.45 0.01 60)">Kane<b style="color:var(--sun-deep)">a</b> · Confidential investor brief · 2026</span>
+  </div>
+</footer>
+
+<!-- Sticky nav active section highlighting -->
+<script>
+(function(){
+  var sections=document.querySelectorAll('section[id]');
+  var navLinks=document.querySelectorAll('nav a[href^="#"]');
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        navLinks.forEach(function(a){
+          var active=a.getAttribute('href')==='#'+e.target.id;
+          a.style.color=active?'var(--ink)':'var(--ink-2)';
+          a.style.fontWeight=active?'700':'500';
+        });
+      }
+    });
+  },{rootMargin:'-40% 0px -40% 0px'});
+  sections.forEach(function(s){observer.observe(s);});
+})();
+</script>
+
+<!-- Mobile responsive grid fixes -->
+<style>
+@media(max-width:900px){
+  section{padding:64px 0}
+  .wrap{padding:0 16px}
+  #hero > .wrap{grid-template-columns:1fr!important;gap:40px}
+  #problem .card{min-width:0}
+  #product > .wrap > div:last-child,
+  #solution > .wrap > div:nth-child(2),
+  #team > .wrap > div:last-child{grid-template-columns:1fr!important}
+  #model > .wrap > div,
+  #market > .wrap > div,
+  #financials > .wrap > div,
+  #traction > .wrap > div:last-child{grid-template-columns:1fr!important}
+  #traction > .wrap > div:nth-child(3){grid-template-columns:repeat(2,1fr)!important}
+  #gtm > .wrap > div:nth-child(2){grid-template-columns:repeat(2,1fr)!important}
+  #ask > .wrap{max-width:100%}
+}
+@media(max-width:600px){
+  #problem > .wrap > div:last-child{grid-template-columns:1fr!important}
+  #solution > .wrap > div:first-child{flex-direction:column!important}
+  #traction > .wrap > div:nth-child(3){grid-template-columns:1fr 1fr!important}
+  #gtm > .wrap > div:nth-child(2){grid-template-columns:1fr 1fr!important}
+  #team > .wrap > div:last-child{grid-template-columns:1fr 1fr!important}
+  nav .hidden{display:none!important}
+}
+</style>
+
+</body>
+</html>
